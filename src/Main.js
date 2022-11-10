@@ -5,11 +5,12 @@ import Bills from "./Bills";
 import History from "./History";
 
 export default function Main() {
-    const [transactions, setTransaction] = useState();
+    const [transaction, setTransaction] = useState();
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/transactions')
             .then (res => {
                 setTransaction(res.data["transactions"])
+
             })
             .catch(err => {
                 console.log(err)
@@ -48,7 +49,7 @@ export default function Main() {
                     </div>
                     <button className="download_csv">Скачать .cvs</button>
                 </div>
-                <History transactions={[transactions]}/>
+                <History transactions={transaction}/>
             </div> {/* /.container */}
         </div>
     )

@@ -1,8 +1,10 @@
 import React from "react";
 
 export default function History(props) {
-    console.log(props.transactions["date"])
-    let test = props.transactions["date"]
+    let transaction = JSON.stringify(props.transactions)
+    let transactionJson = JSON.parse(transaction)
+
+    console.log(transactionJson[0])
     return (
         <div className="history">
             <div className="table_header">
@@ -14,37 +16,29 @@ export default function History(props) {
                 <p className="actions alignment2">Действия</p>
             </div>
             <div className="story">
-                <p className="date alignment2">{test}</p>
-                <p className="type alignment2">Платёж</p>
-                <p className="price alignment2">100</p>
-                <p className="history_currency alignment2">USDT</p>
-                <p className="status alignment2">Выполнена</p>
+                <p className="date alignment2">{transactionJson[0].date}</p>
+                <p className="type alignment2">{transactionJson[0].type}</p>
+                <p className="price alignment2">{transactionJson[0].amount}</p>
+                <p className="history_currency alignment2">{transactionJson[0].currency}</p>
+                <p className="status alignment2">{transactionJson[0].status}</p>
                 <button className="action alignment2">...</button>
-            </div> {/* /.story */}
+            </div>
             <div className="story">
-                <p className="date alignment2">11.08.22, 5:07:47</p>
-                <p className="type alignment2">Платёж</p>
-                <p className="price alignment2">100</p>
-                <p className="history_currency alignment2">USDT</p>
-                <p className="status alignment2">Выполнена</p>
+                <p className="date alignment2">{transactionJson[1].date}</p>
+                <p className="type alignment2">{transactionJson[1].type}</p>
+                <p className="price alignment2">{transactionJson[1].amount}</p>
+                <p className="history_currency alignment2">{transactionJson[1].currency}</p>
+                <p className="status alignment2">{transactionJson[1].status}</p>
                 <button className="action alignment2">...</button>
-            </div> {/* /.story */}
-            <div className="story">
-                <p className="date alignment2">11.08.22, 5:07:47</p>
-                <p className="type alignment2">Платёж</p>
-                <p className="price alignment2">100</p>
-                <p className="history_currency alignment2">USDT</p>
-                <p className="status alignment2">Выполнена</p>
-                <button className="action alignment2">...</button>
-            </div> {/* /.story */}
-            <div className="story">
-                <p className="date alignment2">11.08.22, 5:07:47</p>
-                <p className="type alignment2">Платёж</p>
-                <p className="price alignment2">100</p>
-                <p className="history_currency alignment2">USDT</p>
-                <p className="status alignment2">Выполнена</p>
-                <button className="action alignment2">...</button>
-            </div> {/* /.story */}
+            </div>
+            {/*<div className="story">*/}
+            {/*    <p className="date alignment2">{transactionJson[2].date}</p>*/}
+            {/*    <p className="type alignment2">{transactionJson[2].type}</p>*/}
+            {/*    <p className="price alignment2">{transactionJson[2].amount}</p>*/}
+            {/*    <p className="history_currency alignment2">{transactionJson[2].currency}</p>*/}
+            {/*    <p className="status alignment2">{transactionJson[2].status}</p>*/}
+            {/*    <button className="action alignment2">...</button>*/}
+            {/*</div>*/}
         </div>
     )
 }
