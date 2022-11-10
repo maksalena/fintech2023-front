@@ -6,6 +6,7 @@ import History from "./History";
 
 export default function Main() {
     const [transaction, setTransaction] = useState();
+
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/transactions')
             .then (res => {
@@ -49,7 +50,8 @@ export default function Main() {
                     </div>
                     <button className="download_csv">Скачать .cvs</button>
                 </div>
-                <History transactions={transaction}/>
+                {transaction !== undefined ? <History transactions={transaction}/> : <></> }
+
             </div> {/* /.container */}
         </div>
     )
