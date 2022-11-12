@@ -1,68 +1,17 @@
 import React from "react";
+import Wallet from "./Wallet";
 
-export default function Wallets() {
+export default function Wallets(props) {
+
+    let wallet = JSON.stringify(props.wallets)
+    let walletJson = JSON.parse(wallet)
+    const wallets = []
+    for (let i = 0; i < walletJson.length; i++) {
+        wallets.push(<Wallet info={walletJson[i]}/>)
+    }
     return (
         <div className="currencies">
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BTC</p>
-                        <p className="amount"><b className="quantity">0 </b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BNB</p>
-                        <p className="amount"><b className="quantity">0 </b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BTC</p>
-                        <p className="amount"><b className="quantity">0</b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BNB</p>
-                        <p className="amount"><b className="quantity">0 </b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BTC</p>
-                        <p className="amount"><b className="quantity">0</b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
-            <div className="currency">
-                <div className="info">
-                    <img className="pic_currency" src="https://via.placeholder.com/32" alt="pic_of_currency"/>
-                    <div className="simple_info">
-                        <p className="label">BNB</p>
-                        <p className="amount"><b className="quantity">0 </b> $0 </p>
-                    </div>
-                </div>
-                <button className="transfer">ВЫВОД</button>
-            </div> {/* /.currency */}
+            {wallets}
         </div>
     )
 }

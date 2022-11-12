@@ -5,7 +5,31 @@ import Bills from "./Bills";
 import History from "./History";
 
 export default function Main() {
+    const [wallet, setWallet] = useState();
+    const [bill, setBill] = useState();
     const [transaction, setTransaction] = useState();
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/v1/wallet')
+            .then (res => {
+                setWallet(res.data["wallets"])
+
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }, [])
+
+    useEffect( () => {
+        axios.get('http://localhost:8000/api/v1/account')
+            .then( res => {
+                setBill(res.data["bills"])
+            })
+            .catch( err => {
+                console.log(err)
+        })
+    }, [])
 
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/transactions')
@@ -18,6 +42,7 @@ export default function Main() {
             })
 
     }, [])
+
     return (
         <div className="main_page">
             {/* Wallets */}
@@ -26,7 +51,7 @@ export default function Main() {
                     <button className="wallets active">Кошельки</button>
                     <button className="settings">Настройки</button>
                 </div>
-                <Wallets />
+                {wallet !== undefined ? <Wallets wallets={wallet}/> : <></> }
             </div> {/* /.container */}
 
             {/* Bills */}
@@ -35,7 +60,7 @@ export default function Main() {
                     <p className="list_of_bills">Список счетов</p>
                     <button className="add_bill">СОЗДАТЬ СЧЁТ</button>
                 </div>
-                <Bills />
+                {bill !== undefined ? <Bills bills={bill}/> : <></> }
             </div> {/* /.container */}
 
             {/* History */}
@@ -51,7 +76,6 @@ export default function Main() {
                     <button className="download_csv">Скачать .cvs</button>
                 </div>
                 {transaction !== undefined ? <History transactions={transaction}/> : <></> }
-
             </div> {/* /.container */}
         </div>
     )
