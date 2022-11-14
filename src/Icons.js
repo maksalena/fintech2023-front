@@ -16,7 +16,6 @@ export default function Icons() {
                 <button onClick={togglePopup} className="add_shop">Добавить магазин</button>
             </div>
             <div className="footer">
-                <button className="account_settings">Настройки</button>
                 <button className="log_out">Выйти</button>
             </div>
             {isOpen && <Popup
