@@ -5,44 +5,43 @@ import Bills from "./Bills";
 import History from "./History";
 import Settings from "./Settings";
 
-export default function Main() {
+export default function Main(props) {
     const [wallet, setWallet] = useState();
     const [bill, setBill] = useState();
     const [transaction, setTransaction] = useState();
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v1/wallet')
+        axios.get(`http://localhost:8000/api/v1/wallets/${props.shopId}`)
             .then (res => {
-                setWallet(res.data["wallets"])
+                setWallet(res.data["wallet"])
 
             })
             .catch(err => {
                 console.log(err)
             })
 
-    }, [])
+    }, [props.shopId])
 
     useEffect( () => {
-        axios.get('http://localhost:8000/api/v1/account')
+        axios.get(`http://localhost:8000/api/v1/invoices/${props.shopId}`)
             .then( res => {
-                setBill(res.data["bills"])
+                setBill(res.data["invoice"])
             })
             .catch( err => {
                 console.log(err)
         })
-    }, [])
+    }, [props.shopId])
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/v1/transactions')
+        axios.get(`http://localhost:8000/api/v1/transactions/${props.shopId}`)
             .then (res => {
                 setTransaction(res.data["transactions"])
-
             })
             .catch(err => {
                 console.log(err)
             })
 
-    }, [])
+    }, [props.shopId])
 
     const [activeComponent, setActiveComponent] = useState("show_main");
 
@@ -55,7 +54,7 @@ export default function Main() {
 
     return (
         <>
-            {activeComponent === "show_settings" && <Settings />}
+            {activeComponent === "show_settings" && <Settings shopId={props.shopId}/>}
             {activeComponent === "show_main" &&
                 <div className="main_page">
                     {/* Wallets */}
