@@ -7,7 +7,11 @@ export default function History(props) {
     let transactionJson = JSON.parse(transaction)
     const stories = []
     for (let i = 0; i < transactionJson.length; i++) {
-        stories.push(<Story info={transactionJson[i]}/>)
+        if (props.filter !== "All") {
+            if (props.filter === transactionJson[i].blockchain)
+                stories.push(<Story info={transactionJson[i]}/>)
+        } else
+            stories.push(<Story info={transactionJson[i]}/>)
     }
     return (
         <div className="history">

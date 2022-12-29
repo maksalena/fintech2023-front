@@ -11,6 +11,7 @@ export default function Main(props) {
     const [wallet, setWallet] = useState();
     const [bill, setBill] = useState();
     const [transaction, setTransaction] = useState();
+    const [filterParam, setFilterParam] = useState("All");
 
     const [sWalletType, setWalletType] = useState();
     const [sNameOfInvoice, setNameOfInvoice] = useState();
@@ -143,16 +144,16 @@ export default function Main(props) {
                         <div className="transactions">
                             <div className="history_selector">
                                 <p className="history_of_transaction">История транзакций</p>
-                                <select className="selector">
-                                    <option className="variant">All</option>
-                                    <option className="variant">BTC</option>
-                                    <option className="variant">USDT</option>
-                                    <option className="variant">ETH</option>
+                                <select className="selector" onChange={(e) => { setFilterParam(e.target.value); }}>
+                                    <option value="All" className="variant">All</option>
+                                    <option value="BTC" className="variant">BTC</option>
+                                    <option value="USDT" className="variant">USDT</option>
+                                    <option value="ETH" className="variant">ETH</option>
                                 </select>
                             </div>
                             <button className="download_csv">Скачать .cvs</button>
                         </div>
-                        {transaction !== undefined ? <History transactions={transaction}/> : <></>}
+                        {transaction !== undefined ? <History transactions={transaction} filter={filterParam}/> : <></>}
                     </div>
                     {/* /.container */}
                 </div>
