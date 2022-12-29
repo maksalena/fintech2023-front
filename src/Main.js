@@ -4,11 +4,21 @@ import axios from "axios";
 import Bills from "./Bills";
 import History from "./History";
 import Settings from "./Settings";
+import Popup from "./Popup";
 
 export default function Main(props) {
+    const [isOpen, setIsOpen] = useState(false);
     const [wallet, setWallet] = useState();
     const [bill, setBill] = useState();
     const [transaction, setTransaction] = useState();
+
+    const [sWalletType, setWalletType] = useState();
+    const [sNameOfInvoice, setNameOfInvoice] = useState();
+    const [sBlockchains, setBlockchains] = useState();
+    const [sCurrency, setCurrency] = useState();
+    const [sPrice, setPrice] = useState();
+
+    const current = new Date();
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/v1/wallets/${props.shopId}`)
@@ -52,6 +62,34 @@ export default function Main(props) {
         [setActiveComponent]
     );
 
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    }
+
+    const addBill = () => {
+        const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T${current.getHours()}:${current.getMinutes()}`; // 2022-12-28T17:14
+        axios.post('http://localhost:8000/api/v1/invoices/',
+            {
+                wallet_type: sWalletType,
+                name_of_the_invoice: sNameOfInvoice,
+                date: date,
+                blockchains: sBlockchains,
+                currency: sCurrency,
+                price: sPrice,
+                status: "Success",
+                actual_until: date,
+                store: props.shopId
+            })
+            .then(function (response) {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch(function (error) {
+                alert("Данные некорректны, попробуйте ещё раз")
+                console.log(error);
+            });
+    }
+
     return (
         <>
             {activeComponent === "show_settings" && <Settings shopId={props.shopId}/>}
@@ -75,8 +113,27 @@ export default function Main(props) {
                     <div className="container">
                         <div className="bills_info">
                             <p className="list_of_bills">Список счетов</p>
-                            <button className="add_bill">СОЗДАТЬ СЧЁТ</button>
+                            <button onClick={togglePopup} className="add_bill">СОЗДАТЬ СЧЁТ</button>
                         </div>
+                        {isOpen &&
+                            <Popup
+                                content={
+                                    <div className="container setting">
+                                        <img src={'./logo.jpg'} className="logo"  alt={"logo"}/>
+                                        <h3 className="shop_name">Тип кошелька</h3>
+                                        <input className="textField" type="text" name="name" placeholder={"Тип кошелька"} onChange={e => { setWalletType(e.target.value) }} />
+                                        <h3 className="shop_address">Название счёта</h3>
+                                        <input className="textField" type="text" name="address" placeholder={"Название счёта"} onChange={e => { setNameOfInvoice(e.target.value) }} />
+                                        <h3 className="shop_description">Блокчейн</h3>
+                                        <input className="textField" type="text" name="description" placeholder={"Блокчейны через пробел"} onChange={e => { setBlockchains(e.target.value.split(' ')) }} />
+                                        <h3 className="shop_description">Валюта</h3>
+                                        <input className="textField" type="text" name="description" placeholder={"Валюта"} onChange={e => { setCurrency(e.target.value) }} />
+                                        <h3 className="shop_description">Сумма</h3>
+                                        <input className="textField" type="text" name="description" placeholder={"Сумма"} onChange={e => { setPrice(e.target.value) }} />
+                                        <button className="saveButton" onClick={addBill}>Создать</button>
+                                    </div>}
+                                handleClose={togglePopup}
+                            />}
                         {bill !== undefined ? <Bills bills={bill}/> : <></>}
                     </div>
                     {/* /.container */}
@@ -87,6 +144,8 @@ export default function Main(props) {
                             <div className="history_selector">
                                 <p className="history_of_transaction">История транзакций</p>
                                 <select className="selector">
+                                    <option className="variant">All</option>
+                                    <option className="variant">BTC</option>
                                     <option className="variant">USDT</option>
                                     <option className="variant">ETH</option>
                                 </select>

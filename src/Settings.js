@@ -1,10 +1,20 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Main from "./Main";
 import axios from "axios";
+import ShopButtons from "./ShopButtons";
 
 export default function Settings(props) {
     const [activeComponent, setActiveComponent] = useState("show_settings");
     const [shop, setShop] = useState();
+    const [sName, setName] = useState();
+    const [sAddress, setAddress] = useState();
+    const [sEmail, setEmail] = useState();
+    const [sDescription, setDescription] = useState();
+
+    let shopName
+    let shopAddress
+    let shopEmail
+    let shopDescription
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/v1/stores/${props.shopId}`)
@@ -41,13 +51,9 @@ export default function Settings(props) {
             });
         setTimeout(() => {
             window.location.reload();
-        }, 500);
+        }, 100);
     }
 
-    let shopName
-    let shopAddress
-    let shopEmail
-    let shopDescription
     if (shop !== undefined) {
         shopName = shop.shop_name
         shopAddress = shop.address
@@ -55,10 +61,6 @@ export default function Settings(props) {
         shopDescription = shop.description
     }
 
-    const [sName, setName] = useState();
-    const [sAddress, setAddress] = useState();
-    const [sEmail, setEmail] = useState();
-    const [sDescription, setDescription] = useState();
     return (
         <>
             {activeComponent === "show_main" && <Main shopId={props.shopId}/>}

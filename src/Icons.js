@@ -10,6 +10,11 @@ export default function Icons() {
     const [shop, setShop] = useState();
     const [childData, setChildData] = useState({});
 
+    const [sName, setName] = useState();
+    const [sAddress, setAddress] = useState();
+    const [sEmail, setEmail] = useState();
+    const [sDescription, setDescription] = useState();
+
     const passData = (data) => {
         setChildData(data);
     };
@@ -30,19 +35,20 @@ export default function Icons() {
 
     }, [])
 
-    const sentRequest = () => {
+    const addShop = () => {
         axios.post('http://localhost:8000/api/v1/stores/',
             {
-            shopName: 'Fred',
-            address: 'address',
-            email: 'mail',
-            description: 'descr',
-            logo: 'logo.png',
+                shop_name: sName,
+                address: sAddress,
+                email: sEmail,
+                description: sDescription
         })
             .then(function (response) {
                 console.log(response);
+                window.location.reload();
             })
             .catch(function (error) {
+                alert("Данные некорректны, попробуйте ещё раз")
                 console.log(error);
             });
     }
@@ -58,14 +64,23 @@ export default function Icons() {
                 <div className="footer">
                     <button className="log_out">Выйти</button>
                 </div>
-                {isOpen && <Popup
-                    content={<>
-                        <b>Popup</b>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <button onClick={sentRequest}>Test button</button>
-                    </>}
-                    handleClose={togglePopup}
-                />}
+                {isOpen &&
+                    <Popup
+                        content={
+                            <div className="container setting">
+                                <img src={'./logo.jpg'} className="logo"  alt={"logo"}/>
+                                <h3 className="shop_name">Название магазина</h3>
+                                <input className="textField" type="text" name="name" placeholder={"Название магазина"} onChange={e => { setName(e.target.value) }} />
+                                <h3 className="shop_address">Адрес магазина</h3>
+                                <input className="textField" type="text" name="address" placeholder={"Адрес магазина"} onChange={e => { setAddress(e.target.value) }} />
+                                <h3 className="shop_email">Почта магазина</h3>
+                                <input className="textField" type="email" name="email" placeholder={"Email магазина"} onChange={e => { setEmail(e.target.value) }} />
+                                <h3 className="shop_description">Описание магазина</h3>
+                                <input className="textField" type="text" name="description" placeholder={"Описание"} onChange={e => { setDescription(e.target.value) }} />
+                                <button className="saveButton" onClick={addShop}>Сохранить</button>
+                            </div>}
+                        handleClose={togglePopup}
+                    />}
             </div>
             <Main shopId={childData}/>
         </>
