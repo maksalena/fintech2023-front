@@ -198,12 +198,11 @@ body {
 .action {
   background-color: #F6F6F6;
   border-width: 0;
+  font-size: larger;
 }
 
 .action:hover {
   cursor: pointer;
-  font-size: larger;
-  font-weight: bold;
 }
 
 .transactions {

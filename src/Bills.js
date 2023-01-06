@@ -7,7 +7,7 @@ export default function Bills(props) {
     let billJson = JSON.parse(bill)
     const bills = []
     for (let i = 0; i < billJson.length; i++) {
-        bills.push(<Bill_Info info={billJson[i]}/>)
+        bills.push(<Bill_Info info={billJson[i]} number={i}/>)
     }
     return (
         <div className="bills">
@@ -17,7 +17,7 @@ export default function Bills(props) {
                 <p className="bills_currency alignment1">Валюта</p>
                 <p className="price alignment1">Цена, $</p>
                 <p className="status alignment1">Статус</p>
-                <p className="actual_util alignment1">Использование</p>
+                <p className="actual_util alignment1">Окончание</p>
                 <p className="actions alignment1">Действия</p>
             </div>
             {bills}

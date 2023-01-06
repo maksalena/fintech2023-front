@@ -1,17 +1,9 @@
 import React from "react";
+import './coupon.css'
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import {FaCheck, FaList, FaBan} from 'react-icons/fa'
 
 export default function Story(props) {
-    function action() {
-        if (props.info.status === "active") {
-            console.log("Закрыть счёт")
-        } else if (props.info.status === "Completed") {
-            console.log("Завершить оплату")
-        }
-    }
-
-    function actionDb() {
-        console.log("Детали транзакции")
-    }
 
     return (
         <div className="story">
@@ -20,7 +12,27 @@ export default function Story(props) {
             <p className="price alignment2">{props.info.amount}</p>
             <p className="history_currency alignment2">{props.info.blockchain}</p>
             <p className="status alignment2">{props.info.status}</p>
-            <button onDoubleClick={actionDb} onClick={action} className="action alignment2">...</button>
+            <div className="alignment2">
+                <ContextMenuTrigger mouseButton={0} id="contextmenus">
+                    <button title="Нажмите правой кнопкой мыши" className="action">...</button>
+                </ContextMenuTrigger>
+            </div>
+            <ContextMenu id="contextmenus">
+                {props.info.status === "Active" ?
+                    <MenuItem >
+                        <FaBan className="ban" />
+                        <span>Закрыть счёт</span>
+                    </MenuItem> : <></>}
+                {props.info.status === "Success" ?
+                    <MenuItem >
+                        <FaCheck className="done"/>
+                        <span>Завершить оплату</span>
+                    </MenuItem> : <></>}
+                <MenuItem >
+                    <FaList className="watchlist"/>
+                    <span>Детали транзакции</span>
+                </MenuItem>
+            </ContextMenu>
         </div>
     )
 }
