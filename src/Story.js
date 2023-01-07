@@ -18,16 +18,14 @@ export default function Story(props) {
                 </ContextMenuTrigger>
             </div>
             <ContextMenu id="contextmenus">
-                {props.info.status === "Active" ?
                     <MenuItem >
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
-                    </MenuItem> : <></>}
-                {props.info.status === "Success" ?
+                    </MenuItem>
                     <MenuItem >
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>
-                    </MenuItem> : <></>}
+                    </MenuItem>
                 <MenuItem >
                     <FaList className="watchlist"/>
                     <span>Детали транзакции</span>

@@ -14,6 +14,8 @@ export default function Icons() {
     const [sAddress, setAddress] = useState();
     const [sEmail, setEmail] = useState();
     const [sDescription, setDescription] = useState();
+    const [selectedImage, setSelectedImage] = useState(null);
+
 
     const passData = (data) => {
         setChildData(data);
@@ -41,7 +43,8 @@ export default function Icons() {
                 shop_name: sName,
                 address: sAddress,
                 email: sEmail,
-                description: sDescription
+                description: sDescription,
+                logo: selectedImage
         })
             .then(function (response) {
                 console.log(response);
@@ -68,7 +71,14 @@ export default function Icons() {
                     <Popup
                         content={
                             <div className="container setting">
-                                <img src={'./logo.jpg'} className="logo"  alt={"logo"}/>
+                                <div>
+                                    {selectedImage && (
+                                        <div>
+                                            <img alt="not fount" height={"160px"} className="logo" src={URL.createObjectURL(selectedImage)} />
+                                        </div>
+                                    )}
+                                    <input type="file" name="myImage" onChange={(event) => {console.log(event.target.files[0]); setSelectedImage(event.target.files[0]);}}/>
+                                </div>
                                 <h3 className="shop_name">Название магазина</h3>
                                 <input className="textField" type="text" name="name" placeholder={"Название магазина"} onChange={e => { setName(e.target.value) }} />
                                 <h3 className="shop_address">Адрес магазина</h3>

@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Main from "./Main";
 import axios from "axios";
-import ShopButtons from "./ShopButtons";
 
 export default function Settings(props) {
     const [activeComponent, setActiveComponent] = useState("show_settings");
     const [shop, setShop] = useState();
+    const [selectedImage, setSelectedImage] = useState(null);
     const [sName, setName] = useState();
     const [sAddress, setAddress] = useState();
     const [sEmail, setEmail] = useState();
@@ -15,6 +15,7 @@ export default function Settings(props) {
     let shopAddress
     let shopEmail
     let shopDescription
+    let shopLogo
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/v1/stores/${props.shopId}`)
@@ -41,7 +42,8 @@ export default function Settings(props) {
                 shop_name: sName,
                 address: sAddress,
                 email: sEmail,
-                description: sDescription
+                description: sDescription,
+                logo: selectedImage
             })
             .then(function (response) {
                 console.log(response);
@@ -59,6 +61,7 @@ export default function Settings(props) {
         shopAddress = shop.address
         shopEmail = shop.email
         shopDescription = shop.description
+        shopLogo = shop.logo
     }
 
     return (
@@ -77,7 +80,14 @@ export default function Settings(props) {
                         </div>
                     </div>
                     <div className="container setting">
-                        <img src={'./logo.jpg'} className="logo"  alt={"logo"}/>
+                        <div>
+                            {selectedImage && (
+                                <div>
+                                    <img alt="not fount" height={"160px"} className="logo" src={URL.createObjectURL(selectedImage)} />
+                                </div>
+                            )}
+                            <input defaultValue={shopLogo} type="file" name="myImage" onChange={(event) => {console.log(event.target.files[0]); setSelectedImage(event.target.files[0]);}}/>
+                        </div>
                         <h3 className="shop_name">Название магазина</h3>
                         <input className="textField" type="text" name="name" defaultValue={shopName} onChange={e => { setName(e.target.value) }} />
                         <h3 className="shop_address">Адрес магазина</h3>
