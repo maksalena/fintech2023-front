@@ -1,5 +1,5 @@
 import React from "react";
-import Bill_Info from "./Bill_Info";
+import Bill from "./Bill";
 
 export default function Bills(props) {
 
@@ -7,7 +7,7 @@ export default function Bills(props) {
     let billJson = JSON.parse(bill)
     const bills = []
     for (let i = 0; i < billJson.length; i++) {
-        bills.push(<Bill_Info info={billJson[i]} number={i}/>)
+        bills.push(<Bill info={billJson[i]} number={i}/>)
     }
     return (
         <div className="bills">

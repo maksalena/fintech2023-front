@@ -3,7 +3,7 @@ import './coupon.css'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {FaCheck, FaList, FaBan} from 'react-icons/fa'
 
-export default function Bill_Info(props) {
+export default function Bill(props) {
     const [stat, setStatus] = useState(null);
     const inputs = document.getElementsByClassName("status alignment1"); // id - status
     let item = document.querySelectorAll('.action'); // id - number
