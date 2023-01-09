@@ -4,15 +4,15 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {FaCheck, FaList, FaBan} from 'react-icons/fa'
 
 export default function Bill_Info(props) {
-    const inputs = document.getElementsByClassName("status alignment1");
-
-    let item = document.querySelectorAll('.action');
-    let num
-    let t
+    const [stat, setStatus] = useState(null);
+    const inputs = document.getElementsByClassName("status alignment1"); // id - status
+    let item = document.querySelectorAll('.action'); // id - number
+    let num = 0
 
     item.forEach(function(elem, i){
         elem.addEventListener('click', function(){
-            num = item[i].id
+            num = parseInt(item[i].id) + 1
+            setStatus(inputs[num].id)
         });
     });
     return (
@@ -24,21 +24,19 @@ export default function Bill_Info(props) {
             <p id={props.info.status} className="status alignment1">{props.info.status}</p>
             <p className="actual_util alignment1">{props.info.wallet_type}</p>
             <div className="alignment1">
-                <ContextMenuTrigger mouseButton={0} id="contextmenub">
-                    <button id={props.number} title="Нажмите правой кнопкой мыши" className="action">...</button>
+                <ContextMenuTrigger mouseButton={0} id="contextMenuB">
+                    <button id={props.number} title="Нажмите" className="action">...</button>
                 </ContextMenuTrigger>
             </div>
-            <ContextMenu id="contextmenub">
-                {setTimeout(() => {
-                    t = inputs[num].id
-                    console.log(t)
-                }, 1000)}
-                {t === "Active" ?
+            {/* TODO: make function for changing status */}
+            <ContextMenu id="contextMenuB">
+                {console.log(stat)}
+                {stat === "Active" ?
                     <MenuItem >
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
                     </MenuItem> : <></>}
-                {t === "Success" ?
+                {stat === "Success" ?
                     <MenuItem >
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>

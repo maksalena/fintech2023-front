@@ -18,10 +18,11 @@ export default function Settings(props) {
     let shopLogo
 
     useEffect(() => {
+
         axios.get(`http://localhost:8000/api/v1/stores/${props.shopId}`)
             .then (res => {
                 setShop(res.data["store"])
-
+                console.log(res)
             })
             .catch(err => {
                 console.log(err)
@@ -37,23 +38,27 @@ export default function Settings(props) {
     );
 
     const updateShop = () => {
-        axios.patch(`http://localhost:8000/api/v1/stores/${props.shopId}`,
-            {
-                shop_name: sName,
-                address: sAddress,
-                email: sEmail,
-                description: sDescription,
-                logo: selectedImage
-            })
+        const bodyFormData = new FormData()
+        bodyFormData.append('shop_name', sName)
+        bodyFormData.append('address', sAddress)
+        bodyFormData.append('email', sEmail)
+        bodyFormData.append('description', sDescription)
+        bodyFormData.append('logo', selectedImage)
+        bodyFormData.append('_method', 'PATCH');
+
+        axios.post(
+            "http://localhost:8000/api/v1/stores/",
+            bodyFormData,
+            { headers: { "Content-Type": "multipart/form-data" } }
+        )
             .then(function (response) {
                 console.log(response);
+                window.location.reload();
             })
             .catch(function (error) {
+                alert("Данные некорректны, попробуйте ещё раз")
                 console.log(error);
             });
-        setTimeout(() => {
-            window.location.reload();
-        }, 100);
     }
 
     if (shop !== undefined) {
@@ -61,6 +66,7 @@ export default function Settings(props) {
         shopAddress = shop.address
         shopEmail = shop.email
         shopDescription = shop.description
+        // TODO: change in the future to setSelectedImage(shop.logo)
         shopLogo = shop.logo
     }
 
@@ -86,7 +92,7 @@ export default function Settings(props) {
                                     <img alt="not fount" height={"160px"} className="logo" src={URL.createObjectURL(selectedImage)} />
                                 </div>
                             )}
-                            <input defaultValue={shopLogo} type="file" name="myImage" onChange={(event) => {console.log(event.target.files[0]); setSelectedImage(event.target.files[0]);}}/>
+                            <input type="file" name="myImage" onChange={(event) => {console.log(event.target.files[0]); setSelectedImage(event.target.files[0]);}}/>
                         </div>
                         <h3 className="shop_name">Название магазина</h3>
                         <input className="textField" type="text" name="name" defaultValue={shopName} onChange={e => { setName(e.target.value) }} />

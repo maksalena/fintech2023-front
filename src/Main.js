@@ -128,7 +128,15 @@ export default function Main(props) {
                                         <h3 className="shop_description">Блокчейн</h3>
                                         <input className="textField" type="text" name="description" placeholder={"Блокчейны через пробел"} onChange={e => { setBlockchains(e.target.value.split(' ')) }} />
                                         <h3 className="shop_description">Валюта</h3>
-                                        <input className="textField" type="text" name="description" placeholder={"Валюта"} onChange={e => { setCurrency(e.target.value) }} />
+                                        <select className="textFieldS" onChange={(e) => { setCurrency(e.target.value); }}>
+                                            <option value="BTC" className="variant">BTC</option>
+                                            <option value="USDT" className="variant">USDT</option>
+                                            <option value="ETH" className="variant">ETH</option>
+                                            <option value="DOGE" className="variant">DOGE</option>
+                                            <option value="ITC" className="variant">ITC</option>
+                                            <option value="TRX" className="variant">TRX</option>
+                                            <option value="BUSD" className="variant">BUSD</option>
+                                        </select>
                                         <h3 className="shop_description">Сумма</h3>
                                         <input className="textField" type="text" name="description" placeholder={"Сумма"} onChange={e => { setPrice(e.target.value) }} />
                                         <button className="saveButton" onClick={addBill}>Создать</button>
@@ -149,6 +157,10 @@ export default function Main(props) {
                                     <option value="BTC" className="variant">BTC</option>
                                     <option value="USDT" className="variant">USDT</option>
                                     <option value="ETH" className="variant">ETH</option>
+                                    <option value="DOGE" className="variant">DOGE</option>
+                                    <option value="ITC" className="variant">ITC</option>
+                                    <option value="TRX" className="variant">TRX</option>
+                                    <option value="BUSD" className="variant">BUSD</option>
                                 </select>
                             </div>
                             <button className="download_csv">Скачать .cvs</button>

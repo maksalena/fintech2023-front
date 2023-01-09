@@ -38,13 +38,18 @@ export default function Icons() {
     }, [])
 
     const addShop = () => {
-        axios.post('http://localhost:8000/api/v1/stores/',
-            {
-                shop_name: sName,
-                address: sAddress,
-                email: sEmail,
-                description: sDescription,
-                logo: selectedImage
+        const bodyFormData = new FormData()
+        bodyFormData.append('shop_name', sName)
+        bodyFormData.append('address', sAddress)
+        bodyFormData.append('email', sEmail)
+        bodyFormData.append('description', sDescription)
+        bodyFormData.append('logo', selectedImage)
+
+        axios({
+            method: "post",
+            url: "http://localhost:8000/api/v1/stores/",
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
         })
             .then(function (response) {
                 console.log(response);
