@@ -66,7 +66,7 @@ export default function Main(props) {
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
-
+    // TODO: how to determine status?
     const addBill = () => {
         const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T${current.getHours()}:${current.getMinutes()}`; // 2022-12-28T17:14
         axios.post('http://localhost:8000/api/v1/invoices/',
@@ -143,7 +143,7 @@ export default function Main(props) {
                                     </div>}
                                 handleClose={togglePopup}
                             />}
-                        {bill !== undefined ? <Bills bills={bill}/> : <></>}
+                        {bill !== undefined ? <Bills bills={bill} idS={props.shopId} /> : <></>}
                     </div>
                     {/* /.container */}
 
@@ -165,7 +165,7 @@ export default function Main(props) {
                             </div>
                             <button className="download_csv">Скачать .cvs</button>
                         </div>
-                        {transaction !== undefined ? <History transactions={transaction} filter={filterParam}/> : <></>}
+                        {transaction !== undefined ? <History transactions={transaction} filter={filterParam} idS={props.shopId} /> : <></>}
                     </div>
                     {/* /.container */}
                 </div>

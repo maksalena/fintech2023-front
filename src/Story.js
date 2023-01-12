@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import './coupon.css'
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 import {FaCheck, FaList, FaBan} from 'react-icons/fa'
+import axios from "axios";
 
 export default function Story(props) {
     const [stat, setStatus] = useState(null);
@@ -15,6 +16,37 @@ export default function Story(props) {
             setStatus(inputs[num].id)
         });
     });
+
+    const close = () => {
+        axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
+            {
+                status: "Closed"
+            })
+            .then(function (response) {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch(function (error) {
+                alert("Что-то пошло не так, попробуйте позже")
+                console.log(error);
+            });
+    }
+
+    const finish = () => {
+        axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
+            {
+                status: "Finished"
+            })
+            .then(function (response) {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch(function (error) {
+                alert("Что-то пошло не так, попробуйте позже")
+                console.log(error);
+            });
+    }
+
     return (
         <div className="story">
             <p className="date alignment2">{props.info.date}</p>
@@ -31,12 +63,12 @@ export default function Story(props) {
             <ContextMenu id="contextMenuS">
                 {console.log(stat)}
                 {stat === "Active" ?
-                    <MenuItem >
+                    <MenuItem onClick={close}>
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
                     </MenuItem> : <></>}
                 {stat === "Success" ?
-                    <MenuItem >
+                    <MenuItem onClick={finish}>
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>
                     </MenuItem> : <></>}

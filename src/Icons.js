@@ -29,7 +29,6 @@ export default function Icons() {
         axios.get('http://localhost:8000/api/v1/stores/')
             .then (res => {
                 setShop(res.data["stores"])
-
             })
             .catch(err => {
                 console.log(err)

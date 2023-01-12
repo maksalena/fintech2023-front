@@ -9,9 +9,9 @@ export default function History(props) {
     for (let i = 0; i < transactionJson.length; i++) {
         if (props.filter !== "All") {
             if (props.filter === transactionJson[i].blockchain)
-                stories.push(<Story info={transactionJson[i]} number={i} />)
+                stories.push(<Story info={transactionJson[i]} number={i} idS={props.idS} />)
         } else
-            stories.push(<Story info={transactionJson[i]} number={i} />)
+            stories.push(<Story info={transactionJson[i]} number={i} idS={props.idS} />)
     }
     return (
         <div className="history">

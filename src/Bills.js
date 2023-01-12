@@ -7,7 +7,7 @@ export default function Bills(props) {
     let billJson = JSON.parse(bill)
     const bills = []
     for (let i = 0; i < billJson.length; i++) {
-        bills.push(<Bill info={billJson[i]} number={i}/>)
+        bills.push(<Bill info={billJson[i]} number={i} idS={props.idS} />)
     }
     return (
         <div className="bills">
