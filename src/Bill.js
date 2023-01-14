@@ -21,7 +21,7 @@ export default function Bill(props) {
         if (data.s === 'Active') {
             axios.patch(`http://localhost:8000/api/v1/invoices/${props.idS}`,
                 {
-                    status: "completed"
+                    status: "Completed"
                 })
                 .then(function (response) {
                     console.log(response);
@@ -34,7 +34,7 @@ export default function Bill(props) {
         } else if (data.s === 'Success') {
             axios.patch(`http://localhost:8000/api/v1/invoices/${props.idS}`,
                 {
-                    status: "completed"
+                    status: "Completed"
                 })
                 .then(function (response) {
                     console.log(response);
@@ -61,15 +61,14 @@ export default function Bill(props) {
                     <button id={props.number} title="Нажмите" className="action">...</button>
                 </ContextMenuTrigger>
             </div>
-            {/* TODO: make function for changing status */}
             <ContextMenu id={`contextMenuB${props.number}`}>
                 {console.log(stat)}
-                {stat === "active" ?
+                {stat === "Active" ?
                     <MenuItem data={{s: 'Active'}} onClick={performAction}>
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
                     </MenuItem> : <></>}
-                {stat === "completed" ?
+                {stat === "Completed" ?
                     <MenuItem data={{s: 'Success'}} onClick={performAction}>
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>

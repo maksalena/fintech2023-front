@@ -17,34 +17,35 @@ export default function Story(props) {
         });
     });
 
-    const close = () => {
-        axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
-            {
-                status: "Closed"
-            })
-            .then(function (response) {
-                console.log(response);
-                window.location.reload();
-            })
-            .catch(function (error) {
-                alert("Что-то пошло не так, попробуйте позже")
-                console.log(error);
-            });
-    }
+    function performAction(e, data) {
+        if (data.s === 'Active') {
+            axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
+                {
+                    status: "Completed"
+                })
+                .then(function (response) {
+                    console.log(response);
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    alert("Что-то пошло не так, попробуйте позже")
+                    console.log(error);
+                });
+        } else if (data.s === 'Success') {
+            axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
+                {
+                    status: "Completed"
+                })
+                .then(function (response) {
+                    console.log(response);
+                    window.location.reload();
+                })
+                .catch(function (error) {
+                    alert("Что-то пошло не так, попробуйте позже")
+                    console.log(error);
+                });
+        }
 
-    const finish = () => {
-        axios.patch(`http://localhost:8000/api/v1/transactions/${props.idS}`,
-            {
-                status: "Finished"
-            })
-            .then(function (response) {
-                console.log(response);
-                window.location.reload();
-            })
-            .catch(function (error) {
-                alert("Что-то пошло не так, попробуйте позже")
-                console.log(error);
-            });
     }
 
     return (
@@ -59,20 +60,19 @@ export default function Story(props) {
                     <button id={props.number} title="Нажмите" className="action">...</button>
                 </ContextMenuTrigger>
             </div>
-            {/* TODO: make function for changing status */}
             <ContextMenu id={`contextMenuS${props.number}`}>
                 {console.log(stat)}
                 {stat === "Active" ?
-                    <MenuItem onClick={close}>
+                    <MenuItem data={{s: 'Active'}} onClick={performAction}>
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
                     </MenuItem> : <></>}
-                {stat === "Success" ?
-                    <MenuItem onClick={finish}>
+                {stat === "Completed" ?
+                    <MenuItem data={{s: 'Success'}} onClick={performAction}>
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>
                     </MenuItem> : <></>}
-                <MenuItem >
+                <MenuItem data={{s: 'Description'}} onClick={performAction}>
                     <FaList className="watchlist"/>
                     <span>Детали транзакции</span>
                 </MenuItem>

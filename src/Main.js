@@ -77,7 +77,7 @@ export default function Main(props) {
                 blockchains: sBlockchains,
                 currency: sCurrency,
                 price: sPrice,
-                status: "active",
+                status: "Active",
                 actual_until: date,
                 store: props.shopId
             })
