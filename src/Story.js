@@ -55,12 +55,12 @@ export default function Story(props) {
             <p className="history_currency alignment2">{props.info.blockchain}</p>
             <p id={props.info.status} className="status alignment2">{props.info.status}</p>
             <div className="alignment2">
-                <ContextMenuTrigger mouseButton={0} id="contextMenuS">
+                <ContextMenuTrigger mouseButton={0} id={`contextMenuS${props.number}`}>
                     <button id={props.number} title="Нажмите" className="action">...</button>
                 </ContextMenuTrigger>
             </div>
             {/* TODO: make function for changing status */}
-            <ContextMenu id="contextMenuS">
+            <ContextMenu id={`contextMenuS${props.number}`}>
                 {console.log(stat)}
                 {stat === "Active" ?
                     <MenuItem onClick={close}>

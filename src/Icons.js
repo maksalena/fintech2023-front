@@ -28,7 +28,7 @@ export default function Icons() {
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/stores/')
             .then (res => {
-                setShop(res.data["stores"])
+                setShop(res.data["store"])
             })
             .catch(err => {
                 console.log(err)

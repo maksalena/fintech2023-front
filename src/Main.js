@@ -71,13 +71,13 @@ export default function Main(props) {
         const date = `${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}T${current.getHours()}:${current.getMinutes()}`; // 2022-12-28T17:14
         axios.post('http://localhost:8000/api/v1/invoices/',
             {
-                wallet_type: sWalletType,
+                invoice_type: sWalletType,
                 name_of_the_invoice: sNameOfInvoice,
                 date: date,
                 blockchains: sBlockchains,
                 currency: sCurrency,
                 price: sPrice,
-                status: "Success",
+                status: "active",
                 actual_until: date,
                 store: props.shopId
             })
@@ -143,7 +143,7 @@ export default function Main(props) {
                                     </div>}
                                 handleClose={togglePopup}
                             />}
-                        {bill !== undefined ? <Bills bills={bill} idS={props.shopId} /> : <></>}
+                        {bill !== undefined ? <Bills bills={bill} /> : <></>}
                     </div>
                     {/* /.container */}
 
@@ -165,7 +165,7 @@ export default function Main(props) {
                             </div>
                             <button className="download_csv">Скачать .cvs</button>
                         </div>
-                        {transaction !== undefined ? <History transactions={transaction} filter={filterParam} idS={props.shopId} /> : <></>}
+                        {transaction !== undefined ? <History transactions={transaction} filter={filterParam} /> : <></>}
                     </div>
                     {/* /.container */}
                 </div>

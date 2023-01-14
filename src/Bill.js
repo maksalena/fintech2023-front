@@ -18,11 +18,10 @@ export default function Bill(props) {
     });
 
     function performAction(e, data) {
-        console.log("d")
         if (data.s === 'Active') {
             axios.patch(`http://localhost:8000/api/v1/invoices/${props.idS}`,
                 {
-                    status: "Closed"
+                    status: "completed"
                 })
                 .then(function (response) {
                     console.log(response);
@@ -35,7 +34,7 @@ export default function Bill(props) {
         } else if (data.s === 'Success') {
             axios.patch(`http://localhost:8000/api/v1/invoices/${props.idS}`,
                 {
-                    status: "Finished"
+                    status: "completed"
                 })
                 .then(function (response) {
                     console.log(response);
@@ -56,21 +55,21 @@ export default function Bill(props) {
             <p className="bills_currency alignment1">{props.info.blockchains.join(' ')}</p>
             <p className="price alignment1">{props.info.price}</p>
             <p id={props.info.status} className="status alignment1">{props.info.status}</p>
-            <p className="actual_util alignment1">{props.info.wallet_type}</p>
+            <p className="actual_util alignment1">{props.info.invoice_type}</p>
             <div className="alignment1">
-                <ContextMenuTrigger mouseButton={0} id="contextMenuB">
+                <ContextMenuTrigger mouseButton={0} id={`contextMenuB${props.number}`}>
                     <button id={props.number} title="Нажмите" className="action">...</button>
                 </ContextMenuTrigger>
             </div>
             {/* TODO: make function for changing status */}
-            <ContextMenu id="contextMenuB">
+            <ContextMenu id={`contextMenuB${props.number}`}>
                 {console.log(stat)}
-                {stat === "Active" ?
+                {stat === "active" ?
                     <MenuItem data={{s: 'Active'}} onClick={performAction}>
                         <FaBan className="ban" />
                         <span>Закрыть счёт</span>
                     </MenuItem> : <></>}
-                {stat === "Success" ?
+                {stat === "completed" ?
                     <MenuItem data={{s: 'Success'}} onClick={performAction}>
                         <FaCheck className="done"/>
                         <span>Завершить оплату</span>

@@ -322,3 +322,13 @@ body {
   background-color: #FBFBFB;
   border-color: #c9c9c9;
 }
+
+.payment {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #FBFBFB;
+}
