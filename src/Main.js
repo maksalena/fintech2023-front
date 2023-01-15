@@ -163,7 +163,9 @@ export default function Main(props) {
                                     <option value="BUSD" className="variant">BUSD</option>
                                 </select>
                             </div>
-                            <button className="download_csv">Скачать .cvs</button>
+                            <a href={`http://localhost:8000/api/v1/transactions/${props.shopId}/csv`}>
+                                <button  className="download_csv">Скачать .cvs</button>
+                            </a>
                         </div>
                         {transaction !== undefined ? <History transactions={transaction} filter={filterParam} /> : <></>}
                     </div>
